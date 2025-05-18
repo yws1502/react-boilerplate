@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: react-template
+    image: <프로젝트 이미지 이름>
+    restart: always
+    environment:
+      - WOOSANG_ENV_API_URL=${REACT_APP_API_URL}
+    ports:
+      - <접속 포트>:<프로젝트 포트>

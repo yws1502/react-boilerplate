@@ -1,0 +1,22 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import './reset.css';
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+iframe::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(51, 57, 61, 1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 175, 170, 0.2);
+}
