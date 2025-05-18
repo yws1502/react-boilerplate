@@ -9,11 +9,11 @@ export function useAlert<P extends AlertComponentProps>(AlertComponent: (props: 
   const { open, close } = useOverlay();
 
   const alert = (props: Omit<P, 'onClose'>) => {
-    open(
+    const id = open(
       <AlertComponent
         {...(props as P)}
         onClose={() => {
-          close();
+          close(id);
         }}
       />,
     );

@@ -1,17 +1,43 @@
-import { createContext, PropsWithChildren, ReactNode, useContext, useMemo, useState } from 'react';
+import {
+  createContext,
+  Fragment,
+  PropsWithChildren,
+  ReactNode,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
 const OverlayContext = createContext<{
-  open: (overlay: ReactNode) => void;
-  close: () => void;
+  open: (overlay: ReactNode) => number;
+  close: (id: number) => void;
 } | null>(null);
 
+let id = 0;
+
 function OverlayProvider({ children }: PropsWithChildren) {
-  const [overlay, setOverlay] = useState<ReactNode | null>(null);
+  const [overlays, setOverlays] = useState<Map<number, ReactNode>>(new Map());
 
   const handleOverlay = useMemo(
     () => ({
-      open: (overlay: ReactNode) => setOverlay(overlay),
-      close: () => setOverlay(null),
+      open: (overlay: ReactNode) => {
+        id += 1;
+
+        setOverlays((prev) => {
+          const newMap = new Map(prev);
+          newMap.set(id, overlay);
+
+          return newMap;
+        });
+        return id;
+      },
+      close: (id: number) => {
+        setOverlays((prev) => {
+          const newMap = new Map(prev);
+          newMap.delete(id);
+          return newMap;
+        });
+      },
     }),
     [],
   );
@@ -19,7 +45,9 @@ function OverlayProvider({ children }: PropsWithChildren) {
   return (
     <OverlayContext.Provider value={handleOverlay}>
       {children}
-      {overlay}
+      {Array.from(overlays.entries()).map(([id, element]) => (
+        <Fragment key={id}>{element}</Fragment>
+      ))}
     </OverlayContext.Provider>
   );
 }

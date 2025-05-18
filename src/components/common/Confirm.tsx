@@ -14,7 +14,7 @@ interface ConfirmProps {
 function Confirm({ title, message, onClose, onConfirm, className }: ConfirmProps) {
   return (
     <>
-      <div className="animate-fade-in fixed inset-0 z-40" />
+      <div className="fixed inset-0 z-40 animate-fade-in" />
       <div
         className={twMerge(
           'bg-base-50 shadow-modals fixed left-1/2 top-1/2 z-50 flex w-[400px] -translate-x-1/2 -translate-y-1/2 flex-col items-start justify-between rounded-lg p-4 shadow-md',

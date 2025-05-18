@@ -13,16 +13,16 @@ export function useConfirm<P extends ConfirmComponentProps>(
 
   const confirm = (props: Omit<P, 'onClose' | 'onConfirm'>) =>
     new Promise<boolean>((resolve) => {
-      open(
+      const id = open(
         <ConfirmComponent
           {...(props as P)}
           onClose={() => {
             resolve(false);
-            close();
+            close(id);
           }}
           onConfirm={() => {
             resolve(true);
-            close();
+            close(id);
           }}
         />,
       );
